@@ -14,7 +14,7 @@ Django settings:
 .. code-block:: python
 
     HEALTHCHECKS = [
-        'moj_irat.healthcheck_registry.database_healthcheck',
+        'moj_irat.healthchecks.database_healthcheck',
         # override default list of healthcheck callables
     ]
     AUTODISCOVER_HEALTHCHECKS = True  # whether to autodiscover and load healthcheck.py from all installed apps

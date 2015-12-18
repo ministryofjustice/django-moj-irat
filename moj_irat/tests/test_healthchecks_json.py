@@ -126,3 +126,27 @@ class HealthcheckTestCase(TestCase):
         self.assertTrue(response.status)
         self.assertEqual(response.name, 'url')
         self.assertEqual(response.kwargs['url'], url)
+
+    @responses.activate
+    def test_json_url_healthcheck(self):
+        from moj_irat.healthchecks import JsonUrlHealthcheck
+
+        url = 'http://www.example.com/'
+        value_at_json_path = (123, 'results.0.test')
+        healthcheck = JsonUrlHealthcheck(name='url', url=url, status_code=201,
+                                         value_at_json_path=value_at_json_path)
+
+        json_response = {
+            'results': [
+                {
+                    'test': 123
+                }
+            ]
+        }
+        responses.add(responses.GET, url, json=json_response, status=201)
+        response = healthcheck()
+
+        self.assertTrue(response.status)
+        self.assertEqual(response.name, 'url')
+        self.assertEqual(response.kwargs['url'], url)
+        self.assertEqual(response.kwargs['response'], json_response)

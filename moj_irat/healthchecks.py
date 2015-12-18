@@ -79,16 +79,16 @@ class UrlHealthcheck(object):
 
         try:
             method = getattr(requests, self.method)
-            response = method(self.url, data=self.data,
-                              headers=self.headers, auth=self.auth,
-                              timeout=self.timeout,
-                              allow_redirects=self.allow_redirects)
+            url_response = method(self.url, data=self.data,
+                                  headers=self.headers, auth=self.auth,
+                                  timeout=self.timeout,
+                                  allow_redirects=self.allow_redirects)
             if self.status_code is not None and \
-                    response.status_code != self.status_code:
+                    url_response.status_code != self.status_code:
                 return self.error_response('Response status was not %s' %
                                            self.status_code)
             if self.text_in_response is not None and \
-                    self.text_in_response not in response.text:
+                    self.text_in_response not in url_response.text:
                 return self.error_response('Response text did not contain %s' %
                                            self.text_in_response)
             if self.value_at_json_path is not None:
@@ -104,7 +104,7 @@ class UrlHealthcheck(object):
                 expected_value = self.value_at_json_path[0]
                 json_path = self.value_at_json_path[1]
                 try:
-                    value = get_key_path(response.json(), json_path.split('.'))
+                    value = get_key_path(url_response.json(), json_path.split('.'))
                 except (KeyError, IndexError, ValueError):
                     return self.error_response('Response JSON path "%s" does not exist' %
                                                json_path)
@@ -118,11 +118,28 @@ class UrlHealthcheck(object):
         except requests.HTTPError:
             return self.error_response('URL not loaded')
 
-        return HealthcheckResponse(self.name, True, url=self.url)
+        return self.success_response(url_response)
 
     def error_response(self, error):
         return HealthcheckResponse(self.name, False, error=error,
                                    url=self.url)
+
+    def success_response(self, url_response):
+        return HealthcheckResponse(self.name, True, url=self.url)
+
+
+class JsonUrlHealthcheck(UrlHealthcheck):
+    """
+    Healthcheck for loading a JSON URL and including it in the response
+    """
+
+    def success_response(self, url_response):
+        response = super().success_response(url_response)
+        try:
+            response.kwargs['response'] = url_response.json()
+        except ValueError:
+            response.kwargs['response'] = 'JSON response cannot be parsed'
+        return response
 
 
 class HealthcheckRegistry(object):

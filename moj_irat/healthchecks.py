@@ -220,10 +220,10 @@ class HealthcheckRegistry(object):
                     )
             except Exception as e:
                 response = HealthcheckResponse(
-                        name=get_healthcheck_name(healthcheck),
-                        status=False,
-                        exception=str(e),
-                        exception_class=e.__class__.__name__,
+                    name=get_healthcheck_name(healthcheck),
+                    status=False,
+                    exception=str(e),
+                    exception_class=e.__class__.__name__,
                 )
             responses.append(response)
         return responses

@@ -1,8 +1,13 @@
 import os
 from setuptools import setup
+import sys
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
     README = readme.read()
+
+tests_require = ['responses>=0.5']
+if sys.version_info < (3, 3):
+    tests_require.append('mock>=1.3')
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -24,5 +29,5 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='runtests.runtests',
-    tests_require=['responses>=0.5', 'mock>=1.3']
+    tests_require=tests_require
 )

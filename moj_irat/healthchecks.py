@@ -134,7 +134,10 @@ class JsonUrlHealthcheck(UrlHealthcheck):
     """
 
     def success_response(self, url_response):
-        response = super().success_response(url_response)
+        response = super(
+            JsonUrlHealthcheck,
+            self
+        ).success_response(url_response)
         try:
             response.kwargs['response'] = url_response.json()
         except ValueError:
@@ -217,10 +220,10 @@ class HealthcheckRegistry(object):
                     )
             except Exception as e:
                 response = HealthcheckResponse(
-                        name=get_healthcheck_name(healthcheck),
-                        status=False,
-                        exception=str(e),
-                        exception_class=e.__class__.__name__,
+                    name=get_healthcheck_name(healthcheck),
+                    status=False,
+                    exception=str(e),
+                    exception_class=e.__class__.__name__,
                 )
             responses.append(response)
         return responses

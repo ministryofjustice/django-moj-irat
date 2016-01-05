@@ -26,7 +26,7 @@ class PingJsonView(View):
         if not kwargs.get('build_date_key') or not kwargs.get('commit_id_key'):
             raise ImproperlyConfigured('ping.json schema requires build_date_key and '
                                        'commit_id_key to be provided')
-        super().__init__(**kwargs)
+        super(PingJsonView, self).__init__(**kwargs)
 
     def get(self, request):
         response_data = {

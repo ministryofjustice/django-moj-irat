@@ -134,7 +134,10 @@ class JsonUrlHealthcheck(UrlHealthcheck):
     """
 
     def success_response(self, url_response):
-        response = super().success_response(url_response)
+        response = super(
+            JsonUrlHealthcheck,
+            self
+        ).success_response(url_response)
         try:
             response.kwargs['response'] = url_response.json()
         except ValueError:

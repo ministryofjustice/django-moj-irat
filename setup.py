@@ -21,7 +21,7 @@ setup(
     description="Tools to support adding a Django-based service to "
                 "Ministry of Justice's Incidence Response and Tuning",
     long_description=README,
-    install_requires=['Django>=1.8,<1.9', 'requests'],
+    install_requires=['Django>=1.8', 'requests'],
     classifiers=[
         'Framework :: Django',
         'Intended Audience :: MoJ Developers',

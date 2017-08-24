@@ -101,3 +101,15 @@ class PingJsonViewTestCase(TestCase):
             'version_number': 'master.latest',
             'build_tag': 'TEST Django Utils',
         })
+
+    def test_cors_header_is_set_correctly(self):
+        env = {
+            'DOCKER_IMAGE_DATE': '2015-12-04T10:00:00+0000',
+            'DOCKER_IMAGE_SHA': 'e9866935d3c5d19adc48e0be3ad3f2718b86bfe4',
+        }
+        with mock.patch.dict('os.environ', env):
+            response, response_json = self.call_ping_json_view(
+                build_date_key='DOCKER_IMAGE_DATE',
+                commit_id_key='DOCKER_IMAGE_SHA',
+            )
+        self.assertEqual('*', response['access-control-allow-origin'])

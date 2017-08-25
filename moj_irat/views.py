@@ -37,6 +37,9 @@ class PingJsonView(View):
         response = JsonResponse(response_data)
         if not response_data['build_date'] or not response_data['commit_id']:
             response.status_code = 501
+
+        response['Access-Control-Allow-Origin'] = '*'
+
         return response
 
 

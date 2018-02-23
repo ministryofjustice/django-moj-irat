@@ -22,6 +22,9 @@ Django settings:
 Installation
 ------------
 
+.. image:: https://travis-ci.org/ministryofjustice/django-moj-irat.svg?branch=master
+    :target: https://travis-ci.org/ministryofjustice/django-moj-irat
+
 At the moment, the only way to install the library is from github
 
 .. code-block:: bash

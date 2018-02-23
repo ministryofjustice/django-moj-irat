@@ -24,7 +24,7 @@ setup(
     url='https://github.com/ministryofjustice/django-moj-irat',
     packages=['moj_irat'],
     include_package_data=True,
-    license='BSD License',
+    license='MIT',
     description="Tools to support adding a Django-based service to "
                 "Ministry of Justice's Incidence Response and Tuning",
     long_description=README,

@@ -38,6 +38,16 @@ def database_healthcheck():
 database_healthcheck.name = 'database'
 
 
+def get_key_path(data, path):
+    if not path:
+        return data
+    if isinstance(data, list):
+        next_data = data[int(path[0])]
+    else:
+        next_data = data[path[0]]
+    return get_key_path(next_data, path[1:])
+
+
 class UrlHealthcheck(object):
     """
     Healthcheck for loading a URL
@@ -92,15 +102,6 @@ class UrlHealthcheck(object):
                 return self.error_response('Response text did not contain %s' %
                                            self.text_in_response)
             if self.value_at_json_path is not None:
-                def get_key_path(data, path):
-                    if not path:
-                        return data
-                    if isinstance(data, list):
-                        next_data = data[int(path[0])]
-                    else:
-                        next_data = data[path[0]]
-                    return get_key_path(next_data, path[1:])
-
                 expected_value = self.value_at_json_path[0]
                 json_path = self.value_at_json_path[1]
                 try:
@@ -113,8 +114,6 @@ class UrlHealthcheck(object):
                                                (json_path, expected_value))
         except requests.Timeout:
             return self.error_response('Timed out')
-        except requests.TooManyRedirects:
-            return self.error_response('URL redirected too many times')
         except requests.HTTPError:
             return self.error_response('URL not loaded')
 

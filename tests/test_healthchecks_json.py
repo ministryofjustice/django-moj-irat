@@ -10,12 +10,12 @@ from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 import responses
 
-from moj_irat.tests.utils import TestCase
 from moj_irat.healthchecks import registry
+from tests.utils import TestCase
 
 
 class HealthcheckTestCase(TestCase):
-    re_test_app_modules = re.compile(r'^moj_irat\.tests.app(\.|$)')
+    re_test_app_modules = re.compile(r'^tests.app(\.|$)')
 
     def setUp(self):
         registry.reset()
@@ -40,7 +40,7 @@ class HealthcheckTestCase(TestCase):
         healthcheck_names = [healthcheck.__name__ for healthcheck in registry._registry]
         self.assertListEqual(healthcheck_names, expected_names)
 
-    @override_settings(INSTALLED_APPS=['moj_irat', 'moj_irat.tests.app'],
+    @override_settings(INSTALLED_APPS=['moj_irat', 'tests.app'],
                        HEALTHCHECKS=[])
     def test_healthchecks_autodiscovery(self):
         registry.load_healthchecks()
@@ -65,14 +65,13 @@ class HealthcheckTestCase(TestCase):
             }
         })
 
-    @override_settings(INSTALLED_APPS=['moj_irat', 'moj_irat.tests.app'],
+    @override_settings(INSTALLED_APPS=['moj_irat', 'tests.app'],
                        HEALTHCHECKS=[])
     def test_healthcheck_view_with_responses(self):
         response = self.client.get(reverse('healthcheck_json'))
 
         # must be after view call to not inadvertently cause registration
-        from moj_irat.tests.app.healthchecks import passing_bool_healthcheck, \
-            failing_bool_healthcheck, error_healthcheck
+        from tests.app.healthchecks import passing_bool_healthcheck, failing_bool_healthcheck, error_healthcheck
 
         healthchecks = [passing_bool_healthcheck, failing_bool_healthcheck, error_healthcheck]
 

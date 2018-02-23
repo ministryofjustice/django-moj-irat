@@ -14,11 +14,6 @@ test_settings = dict(
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': False,
-        'OPTIONS': {
-            'context_processors': [],
-            'loaders': ['tests.utils.DummyTemplateLoader'],
-        },
     }],
 )
 

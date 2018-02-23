@@ -5,7 +5,10 @@ except ImportError:
     import mock
 
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 
 from moj_irat.views import PingJsonView

@@ -6,7 +6,10 @@ try:
 except ImportError:
     import mock
 
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 import responses
 
@@ -107,7 +110,6 @@ class HealthcheckTestCase(TestCase):
             }
         }, status_code=500)
 
-    @responses.activate
     def test_url_healthcheck(self):
         from moj_irat.healthchecks import UrlHealthcheck
 
@@ -116,20 +118,20 @@ class HealthcheckTestCase(TestCase):
         healthcheck = UrlHealthcheck(name='url', url=url, status_code=201,
                                      value_at_json_path=value_at_json_path)
 
-        responses.add(responses.GET, url, json={
-            'results': [
-                {
-                    'test': 123
-                }
-            ]
-        }, status=201)
-        response = healthcheck()
+        with responses.RequestsMock() as rsps:
+            rsps.add(rsps.GET, url, json={
+                'results': [
+                    {
+                        'test': 123
+                    }
+                ]
+            }, status=201)
+            response = healthcheck()
 
         self.assertTrue(response.status)
         self.assertEqual(response.name, 'url')
         self.assertEqual(response.kwargs['url'], url)
 
-    @responses.activate
     def test_json_url_healthcheck(self):
         from moj_irat.healthchecks import JsonUrlHealthcheck
 
@@ -145,8 +147,9 @@ class HealthcheckTestCase(TestCase):
                 }
             ]
         }
-        responses.add(responses.GET, url, json=json_response, status=201)
-        response = healthcheck()
+        with responses.RequestsMock() as rsps:
+            rsps.add(rsps.GET, url, json=json_response, status=201)
+            response = healthcheck()
 
         self.assertTrue(response.status)
         self.assertEqual(response.name, 'url')

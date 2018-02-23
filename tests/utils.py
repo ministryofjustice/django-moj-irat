@@ -1,14 +1,6 @@
 import json
 
-from django.template.loaders.app_directories import Loader
 from django.test import SimpleTestCase
-
-
-class DummyTemplateLoader(Loader):
-    is_usable = True
-
-    def load_template_source(self, template_name, template_dirs=None):
-        return 'dummy', 'dummy'
 
 
 class TestCase(SimpleTestCase):

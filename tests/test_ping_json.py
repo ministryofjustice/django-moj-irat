@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 
 from moj_irat.views import PingJsonView
-from moj_irat.tests.utils import TestCase
+from tests.utils import TestCase
 
 
 class PingJsonViewTestCase(TestCase):

@@ -6,8 +6,10 @@ A set of tools to make it easier to add a Django-based service to Ministry of Ju
 * ping.json view
 * healthcheck.json view with extensible healthchecks
 
-healthcheck.json
-----------------
+Usage
+-----
+
+Install using ``pip install django-moj-irat``.
 
 Django settings:
 
@@ -19,20 +21,22 @@ Django settings:
     ]
     AUTODISCOVER_HEALTHCHECKS = True  # whether to autodiscover and load healthcheck.py from all installed apps
 
-Installation
-------------
+Development
+-----------
 
 .. image:: https://travis-ci.org/ministryofjustice/django-moj-irat.svg?branch=master
     :target: https://travis-ci.org/ministryofjustice/django-moj-irat
 
-At the moment, the only way to install the library is from github
+Please report bugs and open pull requests on `GitHub`_.
 
-.. code-block:: bash
+Use ``python setup.py test`` to run all tests.
 
-    pip install git+https://github.com/ministryofjustice/django-moj-irat.git
+Distribute a new version by updating the ``version`` argument in ``setup.py:setup`` and run ``python setup.py sdist bdist_wheel upload``.
 
 Copyright
 ---------
 
 Copyright (C) 2018 HM Government (Ministry of Justice Digital Services).
 See LICENSE.txt for further details.
+
+.. _GitHub: https://github.com/ministryofjustice/django-moj-irat

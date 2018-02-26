@@ -19,7 +19,7 @@ install_requires.append('Django%s' % django_version)
 
 setup(
     name='django-moj-irat',
-    version='0.3',
+    version='0.4',
     author='Ministry of Justice Digital Services',
     url='https://github.com/ministryofjustice/django-moj-irat',
     packages=['moj_irat'],

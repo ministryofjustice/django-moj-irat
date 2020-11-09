@@ -1,8 +1,5 @@
 import json
-try:
-    from unittest import mock
-except ImportError:
-    import mock
+from unittest import mock
 
 from django.core.exceptions import ImproperlyConfigured
 try:

@@ -1,10 +1,7 @@
 import gc
 import re
 import sys
-try:
-    from unittest import mock
-except ImportError:
-    import mock
+from unittest import mock
 
 try:
     from django.urls import reverse

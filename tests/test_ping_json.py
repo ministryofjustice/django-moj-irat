@@ -1,15 +1,9 @@
 import json
-try:
-    from unittest import mock
-except ImportError:
-    import mock
+from unittest import mock
 
 from django.core.exceptions import ImproperlyConfigured
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 from django.http import HttpRequest
+from django.urls import reverse
 
 from moj_irat.views import PingJsonView
 from tests.utils import TestCase

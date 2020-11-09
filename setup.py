@@ -12,8 +12,8 @@ tests_require = ['flake8', 'responses']
 
 setup(
     name='django-moj-irat',
-    version='0.4',
-    author='Ministry of Justice Digital Services',
+    version='0.5',
+    author='Ministry of Justice Digital & Technology',
     author_email='dev@digital.justice.gov.uk',
     url='https://github.com/ministryofjustice/django-moj-irat',
     packages=['moj_irat'],

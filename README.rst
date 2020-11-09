@@ -32,7 +32,8 @@ Please report bugs and open pull requests on `GitHub`_.
 Use ``python setup.py test`` to run all tests.
 
 Distribute a new version by updating the ``version`` argument in ``setup.py:setup`` and
-creating a release in GitHub (this triggers a GitHub Actions workflow to automatically upload it).
+publishing a release in GitHub (this triggers a GitHub Actions workflow to automatically upload it).
+Alternatively, run ``python setup.py sdist bdist_wheel upload`` locally.
 
 Copyright
 ---------

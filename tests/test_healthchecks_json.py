@@ -3,11 +3,8 @@ import re
 import sys
 from unittest import mock
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
+from django.urls import reverse
 import responses
 
 from moj_irat.healthchecks import registry

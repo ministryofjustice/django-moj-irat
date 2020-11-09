@@ -7,10 +7,8 @@ root_path = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(root_path, 'README.rst')) as readme:
     README = readme.read()
 
-install_requires = ['requests']
+install_requires = ['Django>=2.2,<4', 'requests']
 tests_require = ['flake8', 'responses']
-django_version = '>=1.10,<2'
-install_requires.append('Django%s' % django_version)
 
 setup(
     name='django-moj-irat',

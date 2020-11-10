@@ -24,8 +24,8 @@ Django settings:
 Development
 -----------
 
-.. image:: https://travis-ci.org/ministryofjustice/django-moj-irat.svg?branch=master
-    :target: https://travis-ci.org/ministryofjustice/django-moj-irat
+.. image:: https://github.com/ministryofjustice/django-moj-irat/workflows/Run%20tests/badge.svg?branch=master
+    :target: https://github.com/ministryofjustice/django-moj-irat/actions
 
 Please report bugs and open pull requests on `GitHub`_.
 

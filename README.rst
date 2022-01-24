@@ -31,14 +31,15 @@ Please report bugs and open pull requests on `GitHub`_.
 
 Use ``python setup.py test`` to run all tests.
 
-Distribute a new version by updating the ``VERSION`` tuple in ``moj_irat/__init__.py`` and
+Distribute a new version to `PyPi`_ by updating the ``VERSION`` tuple in ``moj_irat/__init__.py`` and
 publishing a release in GitHub (this triggers a GitHub Actions workflow to automatically upload it).
 Alternatively, run ``python setup.py sdist bdist_wheel upload`` locally.
 
 Copyright
 ---------
 
-Copyright (C) 2020 HM Government (Ministry of Justice Digital & Technology).
+Copyright (C) 2022 HM Government (Ministry of Justice Digital & Technology).
 See LICENSE.txt for further details.
 
 .. _GitHub: https://github.com/ministryofjustice/django-moj-irat
+.. _PyPi: https://pypi.org/project/django-moj-irat/

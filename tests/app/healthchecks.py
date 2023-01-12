@@ -17,15 +17,14 @@ def _track_calls(func):
     return inner
 
 
-class PassingResponseHealthcheck(object):
+class PassingResponseHealthcheck:
     def __call__(self, *args, **kwargs):
         return HealthcheckResponse('class', True)
 
 
-class PassingExtraResponseHealthcheck(object):
+class PassingExtraResponseHealthcheck:
     def __call__(self, *args, **kwargs):
-        return HealthcheckResponse('class_extra', True,
-                                   extra='extra message')
+        return HealthcheckResponse('class_extra', True, extra='extra message')
 
 
 @_track_calls

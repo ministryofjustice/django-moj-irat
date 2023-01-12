@@ -6,7 +6,7 @@ from django.utils.module_loading import autodiscover_modules, import_string
 DEFAULT_HEALTHCHECKS = ['moj_irat.healthchecks.database_healthcheck']
 
 
-class HealthcheckResponse(object):
+class HealthcheckResponse:
     def __init__(self, name, status, **kwargs):
         self.name = name
         self.status = status
@@ -48,7 +48,7 @@ def get_key_path(data, path):
     return get_key_path(next_data, path[1:])
 
 
-class UrlHealthcheck(object):
+class UrlHealthcheck:
     """
     Healthcheck for loading a URL
     """
@@ -133,10 +133,7 @@ class JsonUrlHealthcheck(UrlHealthcheck):
     """
 
     def success_response(self, url_response):
-        response = super(
-            JsonUrlHealthcheck,
-            self
-        ).success_response(url_response)
+        response = super(JsonUrlHealthcheck, self).success_response(url_response)
         try:
             response.kwargs['response'] = url_response.json()
         except ValueError:
@@ -144,7 +141,7 @@ class JsonUrlHealthcheck(UrlHealthcheck):
         return response
 
 
-class HealthcheckRegistry(object):
+class HealthcheckRegistry:
     """
     Healthcheck registry - loads and runs healthchecks.  A healthcheck is a
     callable, or a class whose instances are callable, that returns a bool,

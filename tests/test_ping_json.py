@@ -1,6 +1,8 @@
 import json
+import sys
 from unittest import mock
 
+import django
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
 from django.urls import reverse
@@ -10,6 +12,9 @@ from tests.utils import TestCase
 
 
 class PingJsonViewTestCase(TestCase):
+    def test_print_django_version(self):
+        print(f'Testing on django {django.__version__}', file=sys.stderr)
+
     def call_ping_json_view(self, **view_kwargs):
         view = PingJsonView.as_view(**view_kwargs)
         request = HttpRequest()

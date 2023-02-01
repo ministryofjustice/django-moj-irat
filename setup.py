@@ -14,9 +14,6 @@ root_path = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(root_path, 'README.rst')) as readme:
     README = readme.read()
 
-install_requires = ['Django>=2.2,<4.3', 'requests']
-tests_require = ['responses']
-
 package_info = importlib.import_module('moj_irat')
 
 setup(
@@ -52,7 +49,7 @@ setup(
         'Programming Language :: Python :: 3.11',
     ],
     python_requires='>=3.6',  # looser requirement than what's tested
-    install_requires=install_requires,
-    tests_require=tests_require,
+    install_requires=['Django>=2.2,<4.3', 'requests'],
+    tests_require=['responses'],
     test_suite='tests.run',
 )

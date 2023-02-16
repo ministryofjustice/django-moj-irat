@@ -39,4 +39,6 @@ jobs:
       - name: Install testing requirements
         run: pip install -r requirements-test.txt
       - name: Run tests
-        run: python -m tests
+        run: |
+          pip install --editable .
+          python -m tests

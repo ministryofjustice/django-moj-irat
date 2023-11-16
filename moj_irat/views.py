@@ -47,6 +47,7 @@ class HealthcheckView(View):
     """
     View for returning the health status of dependency services for IRaT support
     """
+
     def get(self, request):
         from moj_irat.healthchecks import registry
 

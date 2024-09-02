@@ -48,6 +48,9 @@ Alternatively, you can use ``tox`` if you have multiple python versions.
 History
 -------
 
+0.10
+    Add experimental support for Django versions 5.0 & 5.1.
+
 0.9
     Migrated test, build and release processes away from deprecated setuptools commands.
     No significant library changes.

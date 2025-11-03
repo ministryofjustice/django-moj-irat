@@ -3,9 +3,9 @@ import re
 import sys
 from unittest import mock
 
+import responses
 from django.test.utils import override_settings
 from django.urls import reverse
-import responses
 
 from moj_irat.healthchecks import registry
 from tests.utils import TestCase
@@ -55,11 +55,11 @@ class HealthcheckTestCase(TestCase):
         response = self.client.get(reverse('healthcheck_json'))
         self.assertJsonResponse(response, {
             'database': {
-                'status': True
+                'status': True,
             },
             '*': {
-                'status': True
-            }
+                'status': True,
+            },
         })
 
     @override_settings(INSTALLED_APPS=['moj_irat', 'tests.app'],
@@ -68,7 +68,7 @@ class HealthcheckTestCase(TestCase):
         response = self.client.get(reverse('healthcheck_json'))
 
         # must be after view call to not inadvertently cause registration
-        from tests.app.healthchecks import passing_bool_healthcheck, failing_bool_healthcheck, error_healthcheck
+        from tests.app.healthchecks import error_healthcheck, failing_bool_healthcheck, passing_bool_healthcheck
 
         healthchecks = [passing_bool_healthcheck, failing_bool_healthcheck, error_healthcheck]
 
@@ -77,15 +77,15 @@ class HealthcheckTestCase(TestCase):
                 {
                     'args': (),
                     'kwargs': {},
-                }
+                },
             ])
 
         self.assertJsonResponse(response, {
             'passing_bool_healthcheck': {
-                'status': True
+                'status': True,
             },
             'failing_bool': {
-                'status': False
+                'status': False,
             },
             'error_healthcheck': {
                 'status': False,
@@ -100,8 +100,8 @@ class HealthcheckTestCase(TestCase):
                 'extra': 'extra message',
             },
             '*': {
-                'status': False
-            }
+                'status': False,
+            },
         }, status_code=500)
 
     def test_url_healthcheck(self):
@@ -116,9 +116,9 @@ class HealthcheckTestCase(TestCase):
             rsps.add(rsps.GET, url, json={
                 'results': [
                     {
-                        'test': 123
-                    }
-                ]
+                        'test': 123,
+                    },
+                ],
             }, status=201)
             response = healthcheck()
 
@@ -137,9 +137,9 @@ class HealthcheckTestCase(TestCase):
         json_response = {
             'results': [
                 {
-                    'test': 123
-                }
-            ]
+                    'test': 123,
+                },
+            ],
         }
         with responses.RequestsMock() as rsps:
             rsps.add(rsps.GET, url, json=json_response, status=201)

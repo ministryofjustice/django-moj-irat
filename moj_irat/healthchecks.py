@@ -13,7 +13,8 @@ class HealthcheckResponse:
         self.kwargs = kwargs
 
     def __str__(self, *args, **kwargs):
-        return '%s: %s' % (self.name, 'Passed' if self.status else 'Failed')
+        status = 'Passed' if self.status else 'Failed'
+        return f'{self.name}: {status}'
 
     def get_dict(self):
         data = {
@@ -95,23 +96,19 @@ class UrlHealthcheck:
                                   allow_redirects=self.allow_redirects)
             if self.status_code is not None and \
                     url_response.status_code != self.status_code:
-                return self.error_response('Response status was not %s' %
-                                           self.status_code)
+                return self.error_response(f'Response status was not {self.status_code}')
             if self.text_in_response is not None and \
                     self.text_in_response not in url_response.text:
-                return self.error_response('Response text did not contain %s' %
-                                           self.text_in_response)
+                return self.error_response(f'Response text did not contain {self.text_in_response}')
             if self.value_at_json_path is not None:
                 expected_value = self.value_at_json_path[0]
                 json_path = self.value_at_json_path[1]
                 try:
                     value = get_key_path(url_response.json(), json_path.split('.'))
                 except (KeyError, IndexError, ValueError):
-                    return self.error_response('Response JSON path "%s" does not exist' %
-                                               json_path)
+                    return self.error_response(f'Response JSON path "{json_path}" does not exist')
                 if value != expected_value:
-                    return self.error_response('Response JSON path "%s" did not contain "%s"' %
-                                               (json_path, expected_value))
+                    return self.error_response(f'Response JSON path "{json_path}" did not contain "{expected_value}"')
         except requests.Timeout:
             return self.error_response('Timed out')
         except requests.HTTPError:
@@ -120,8 +117,7 @@ class UrlHealthcheck:
         return self.success_response(url_response)
 
     def error_response(self, error):
-        return HealthcheckResponse(self.name, False, error=error,
-                                   url=self.url)
+        return HealthcheckResponse(self.name, False, error=error, url=self.url)
 
     def success_response(self, url_response):
         return HealthcheckResponse(self.name, True, url=self.url)
@@ -133,7 +129,7 @@ class JsonUrlHealthcheck(UrlHealthcheck):
     """
 
     def success_response(self, url_response):
-        response = super(JsonUrlHealthcheck, self).success_response(url_response)
+        response = super().success_response(url_response)
         try:
             response.kwargs['response'] = url_response.json()
         except ValueError:

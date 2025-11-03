@@ -26,7 +26,7 @@ class PingJsonView(View):
         if not kwargs.get('build_date_key') or not kwargs.get('commit_id_key'):
             raise ImproperlyConfigured('ping.json schema requires build_date_key and '
                                        'commit_id_key to be provided')
-        super(PingJsonView, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def get(self, request):
         response_data = {
@@ -57,7 +57,7 @@ class HealthcheckView(View):
             check_name = response.pop('name')
             response_data[check_name] = response
         all_passed = all(response['status'] for response in response_data.values())
-        response_data['*'] = dict(status=all_passed)
+        response_data['*'] = {'status': all_passed}
 
         response = JsonResponse(response_data)
         if not all_passed:
